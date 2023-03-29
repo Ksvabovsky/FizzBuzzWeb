@@ -4,7 +4,45 @@
     ViewData["Title"] = "Home page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Cześć</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+
+<div class="text-left">
+    <h1 class="display-4">Welcome User</h1>
+    <p>Twoj szczesliwy numerek</p>
+    <form type="post">
+        <div class="row">
+            <div class="col">
+                <input type="text" class="form-control" name="number" placeholder="Podaj liczbe">
+            </div>
+        </div>
+        <input class="btn btn-primary mt-2 mb-2" type="submit" value="Submit">
+    </form>
+
+    <div class="alert alert-success" role="alert">
+        @if (Model.number.ToString() == string.IsNullOrEmpty)
+        {
+            @if (Model.number != null)
+            {
+                @if (Model.number % 3 == 0 & Model.number % 5 == 0)
+                {
+                    <span>FizzBuzz</span>
+                }
+                else if (Model.number % 3 == 0)
+                {
+                    <span>Fizz</span>
+                }
+                else if (Model.number % 5 == 0)
+                {
+                    <span>Buzz</span>
+                }
+                else
+                {
+                    <span>@Model.number nie spełnia warunków gry FizzBuzz</span>
+                }
+            }
+        }
+
+        
+    </div>
+
 </div>

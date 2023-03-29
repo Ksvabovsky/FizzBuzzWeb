@@ -50,3 +50,7 @@ button.accept-policy {
 .invisible {
     display: none;
 }
+
+.mg {
+    margin: 20px
+}
