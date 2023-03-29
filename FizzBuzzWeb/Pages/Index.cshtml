@@ -19,8 +19,8 @@
     </form>
 
     <div class="alert alert-success" role="alert">
-        @if (Model.number.ToString() == string.IsNullOrEmpty)
-        {
+        @*@if (Model.number.ToString() == null)
+        {*@
             @if (Model.number != null)
             {
                 @if (Model.number % 3 == 0 & Model.number % 5 == 0)
@@ -39,7 +39,7 @@
                 {
                     <span>@Model.number nie spełnia warunków gry FizzBuzz</span>
                 }
-            }
+            @*}*@
         }
 
         
