@@ -1,20 +1,55 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FizzBuzzWeb.Forms;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace FizzBuzzWeb.Pages
 {
-    public class IndexModel : PageModel
-    {
-        private readonly ILogger<IndexModel> _logger;
+	public class IndexModel : PageModel
+	{
+		private readonly ILogger<IndexModel> _logger;
 
-        public IndexModel(ILogger<IndexModel> logger)
-        {
-            _logger = logger;
-        }
 
-        public void OnGet()
-        {
+		[BindProperty]
+		public FizzBuzzForm FizzBuzz { set; get; }
 
-        }
-    }
+		[BindProperty(SupportsGet = true)]
+		public string? Name { get; set; }
+
+		[BindProperty(SupportsGet = true)]
+		public String? Number { get; set; }
+
+		[BindProperty(SupportsGet = true)]
+		public String? Success { get; set; }
+
+		public IndexModel(ILogger<IndexModel> logger)
+		{
+			_logger = logger;
+		}
+
+		public void OnGet()
+		{
+			//if (string.IsNullOrWhiteSpace(Name))
+			//{
+			//	Name = "User";
+			//}
+		}
+		public IActionResult OnPost()
+		{
+			if (!ModelState.IsValid)
+			{
+				return Page();
+			}
+			else
+			{
+				if (FizzBuzz.Number % 3 == 0)
+					Success += "Fizz";
+				if (FizzBuzz.Number % 5 == 0)
+					Success += "Buzz";
+				if (string.IsNullOrEmpty(Success))
+					Success += "Liczba: " + FizzBuzz.Number + " nie spełnia kryteriów FizzBuzz";
+				return Page();
+			}
+
+		}
+	}
 }

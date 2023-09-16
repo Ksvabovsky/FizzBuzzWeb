@@ -4,7 +4,27 @@
     ViewData["Title"] = "Home page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Cześć</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="text-left">
+    <h1 class="display-4 m-1">Welcome @Model.Name</h1>
+    <form method="post">
+        <label asp-for="FizzBuzz.Number" class="m-1"></label>
+        <br/>
+        <input asp-for="FizzBuzz.Number" class="m-1"/><br />
+        <button type="submit" class="btn btn-primary m-1">Zatwierdź</button>
+        <div id="alert" class="alert alert-danger m-1" role="alert">
+            <span asp-validation-for="FizzBuzz.Number"></span>
+        </div>
+        <div id="success-message" class="alert alert-success m-1" role="alert">
+            <span>@Model.Success</span>
+        </div>
+    </form>
 </div>
+<script>
+    let alert = document.getElementById("alert");
+    let successMessage = document.getElementById("success-message");
+    if(alert.innerText == "")
+        alert.style.display = "none";
+    if(successMessage.innerText == "")
+        successMessage.style.display = "none";
+</script>
+
