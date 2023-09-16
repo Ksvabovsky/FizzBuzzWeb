@@ -1,0 +1,19 @@
+﻿@page
+@model FizzBuzzWeb.Pages.SavedModel
+@{
+}
+
+@foreach (var information in @Model.InformationsAboutLeapYear)
+{
+    <p>@information</p>
+}
+@if(@Model.InformationsAboutLeapYear.Count == 0)
+{
+    <p>
+      Jak dasz nam dane na <a href="/">tej stronie </a> to pojawią się tutaj rzeczy
+        
+    </p>
+}
+@{
+    <a asp-area="" asp-page="/Index">Powrót</a>
+}

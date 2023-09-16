@@ -3,50 +3,50 @@ using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Collections;
 
 namespace FizzBuzzWeb.Pages
 {
 	public class IndexModel : PageModel
 	{
-		private readonly ILogger<IndexModel> _logger;
+        private readonly ILogger<IndexModel> _logger;
 
+        [BindProperty]
+        public FizzBuzzForm FizzBuzz { get; set; }
 
-		[BindProperty]
-		public FizzBuzzForm FizzBuzz { set; get; }
+        public String Success{ get; set; }
+        public ArrayList InformationsAboutLeapYear { get; set; }
 
-		[BindProperty(SupportsGet = true)]
-		public string? Name { get; set; }
+        public IndexModel(ILogger<IndexModel> logger)
+        {
+            _logger = logger;
+        }
 
-		[BindProperty(SupportsGet = true)]
-		public String? Number { get; set; }
+        public void OnGet()
+        {
 
-		[BindProperty(SupportsGet = true)]
-		public String? Success { get; set; }
-
-		public IndexModel(ILogger<IndexModel> logger)
-		{
-			_logger = logger;
-		}
-
-		public void OnGet()
-		{
-			//if (string.IsNullOrWhiteSpace(Name))
-			//{
-			//	Name = "User";
-			//}
-		}
-		public IActionResult OnPost()
-		{
-
+        }
+        public IActionResult OnPost()
+        {
             if (ModelState.IsValid)
             {
-                HttpContext.Session.SetString("Data",
-                JsonConvert.SerializeObject(FizzBuzz));
-				return RedirectToPage("./SavedInSession");
+                var Data = HttpContext.Session.GetString("SessionVariable1");
+                if (Data != null)
+                {
+                    InformationsAboutLeapYear = JsonConvert.DeserializeObject<ArrayList>(Data);
+                }
+                else
+                    InformationsAboutLeapYear = new ArrayList();
+                Success = FizzBuzz.Name + " urodził się w " + FizzBuzz.Year +
+                    " roku. To był rok " + FizzBuzz.isYearLeapYear() + ".";
 
-			}
-			return Page();
+                var stringToCache = InformationsAboutLeapYear.Count + ". " + FizzBuzz.Name + "," +
+                    FizzBuzz.Year + " - rok " + FizzBuzz.isYearLeapYear();
 
-		}
-	}
+                InformationsAboutLeapYear.Insert(0, stringToCache);
+                HttpContext.Session.SetString("SessionVariable1", JsonConvert.SerializeObject(InformationsAboutLeapYear));
+            }
+            return Page();
+        }
+    }
 }
